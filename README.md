@@ -8,15 +8,15 @@ This project uses Microsoft Excel with macros enabled to automatically populate 
 
 ### Analysis and Results of Stock Performance
 
-For analyzing yearly stock data two values were calculated for each stock ticker: the Total Daily Volume and the yearly Return. A macro was created that retrieved values from data sheets via iterating through each row on the sheet and using the ticker column pulled the needed data into variables created to hold the results. In order to find when the starting point of one stock's data began, a conditional statement was set to determine if the row above contained the same value for the ticker column; if not, it was determined to be the start.
+For analyzing yearly stock data two values were calculated for each company's stocks: the Total Daily Volume and the yearly Return. A macro was created that retrieved values from spreadsheets of the yearly data via iterating through each row on the sheet and using the ticker column to pull the desired data into variables created for holding the results. In order to find when the starting point of one stock's data began, a conditional statement was set to determine if the row above contained the same value for the company stock ticker column; if the value above was not the same ticker, it was determined to be the start.
 
 ```If Cells(i, 1).Value = tickers(tickerIndex) And Cells(i - 1, 1).Value <> tickers(tickerIndex) Then```
 
-Here the variable `tickers` refers to an array that contains all the known stock tickers, such as `tickers(2) = "DQ"`, with the `tickerIndex` being a variable that is incremented when we determine the end of a stock's data. The end point is determined when a row where the following row contains a different value in the stock ticker column is found in a similar conditional statement as above.
+Here the variable `tickers` refers to an array that contains all the known stock tickers, such as `tickers(2) = "DQ"`, with the `tickerIndex` being a variable that is incremented when we determine the end of a stock's data. The code starts with `tickerIndex = 0`, which sets the value of `tickers(tickerIndex)` to "AY"; since the first row in the data contains "AY" and there is no data above it, both conditions in the If statement evaluate to true and the starting point of the data for "AY" is determined. The end point is determined when a row where the following row contains a different value in the stock ticker column is found in a similar conditional statement as above, checking if `Cells(i + 1, 1).Value` does not equal the current ticker.
 
-To determine the Total Daily Volume, the value in the Volume column is totalled on each iteration of the loop stored in an array that also utilizes the `tickerIndex` variable, meaning that `tickerVolumes(2)` refers to DQ's Total Daily Volume as it is related to the same index used for the tickers themselves.
+To determine the Total Daily Volume, the value in the Volume column is totaled on each iteration of the loop stored in an array that also utilizes the `tickerIndex` variable, meaning that `tickerVolumes(2)` refers to DQ's Total Daily Volume as it is related by the same index used for the tickers themselves.
 
-The yearly Return uses the same conditional statments that determine the starting and ending point of a stock's data and sets `startingPrice(tickerIndex)` and `endingPrice(tickerIndex)` to the values in the Price column on the data sheet. The calculation is performed in a loop that also writes the values contained in the `tickers` and `tickerVolumes` to the analysis sheet:
+The yearly Return uses the same conditional statments that determine the starting and ending point of a stock's data and sets `startingPrice(tickerIndex)` and `endingPrice(tickerIndex)` to the values in the Price column on the data sheet. The calculation is performed in a loop that also writes the values contained in the `tickers` and `tickerVolumes` to the analysis sheet and later formatted into a percentage:
 
 ```
 For i = 0 To 11
@@ -35,7 +35,7 @@ This produces two tables:
 | :---: | :---: |
 | ![2018 Stock Analysis](/Resources/VBA_2018_stocks.png) | ![2017 Stock Analysis](/Resources/VBA_2017_stocks.png) |
 
-In general most of the clean energy stocks used in this analysis did poorly in 2018, especially in comparison to 2017. Nearly all tickers dropped in total shares being traded and all but 2 had a negative Return, a stark contrast to 2017 where all but one had a positive Return. Two tickers stand above the rest: ENPH and RUN both grew in Total Daily Volume from years 2017 to 2018 and maintained a positive Return.
+In general most of the clean energy stocks used in this analysis did poorly in 2018, especially in comparison to 2017. Nearly all companies dropped in total shares being traded and all but 2 had a negative Return, a stark contrast to 2017 where all but one had a positive Return. Two tickers stand above the rest: ENPH and RUN both grew in Total Daily Volume from years 2017 to 2018 and maintained a positive Return.
 
 ### Analysis of Code Performance
 
@@ -47,7 +47,7 @@ Originally this data was analyzed with a macro involving nested For loops. Only 
 
 3) `If Cells(j, 1).Value = ticker And Cells(j + 1, 1).Value <> ticker Then` to find the `endingPrice`.
 
-After all these values are determined, the nested loop ends after it reaches the last row in the spreadsheet. Returning to the outer loop, it activates the output analysis spreadsheet to write in the values obtained in the nested loop similar to the refactored macro described in the Stock Perfomance Analysis. After writing these values the index for the `tickers` array increments by 1, meaning this macro runs the nested For loop that iterates over each row in the data spreadsheet 12 times.
+After all these values are determined, the nested loop ends once it reaches the last row in the spreadsheet. Returning to the outer loop, it activates the output analysis spreadsheet to write in the values obtained in the nested loop, similar to the refactored macro described in the Stock Perfomance Analysis except that the refactored macro separates this loop. After writing these values the index for the `tickers` array increments by 1, meaning this macro runs the nested For loop that iterates over each row in the data spreadsheet 12 times.
 
 To compare the performance of these two macros a timer was set to start right after the user inputs the desired year to perform the analysis on. The results of those times for the year 2018 are as follows:
 
