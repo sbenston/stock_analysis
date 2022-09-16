@@ -33,7 +33,7 @@ This produces two tables:
 
 | 2018 Stock Analysis | 2017 Stock Analysis |
 | :---: | :---: |
-| ![2018 Stock Analysis](/Resources/VBA_2018_stocks.png) | ![2017 Stock Analysis](/Resources/VBA_2017.stocks.png) |
+| ![2018 Stock Analysis](/Resources/VBA_2018_stocks.png) | ![2017 Stock Analysis](/Resources/VBA_2017_stocks.png) |
 
 In general most of the clean energy stocks used in this analysis did poorly in 2018, especially in comparison to 2017. Nearly all tickers dropped in total shares being traded and all but 2 had a negative Return, a stark contrast to 2017 where all but one had a positive Return. Two tickers stand above the rest: ENPH and RUN both grew in Total Daily Volume from years 2017 to 2018 and maintained a positive Return.
 
